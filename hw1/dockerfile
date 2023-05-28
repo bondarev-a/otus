@@ -3,7 +3,7 @@ RUN apk update && apk add
 ENV DIR=/hw1
 WORKDIR ${DIR}
 RUN export PATH=$PATH:${DIR}
-COPY ./srv ${DIR}
+COPY ./srv .
 EXPOSE 8000
 ENTRYPOINT ["/hw1/srv"]
 #CMD ${DIR}/srv
