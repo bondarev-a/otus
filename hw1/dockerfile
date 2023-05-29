@@ -1,9 +1,8 @@
-FROM alpine
-RUN apk update && apk add 
+FROM golang:alpine
+#RUN apk update && apk add 
 ENV DIR=/hw1
 WORKDIR ${DIR}
-RUN export PATH=$PATH:${DIR}
-COPY ./srv .
+COPY http-srv .
 EXPOSE 8000
-ENTRYPOINT ["/hw1/srv"]
+ENTRYPOINT ${DIR}/http-srv
 #CMD ${DIR}/srv

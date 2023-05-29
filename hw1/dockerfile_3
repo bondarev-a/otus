@@ -1,0 +1,10 @@
+FROM golang:alpine
+#RUN apk update && apk add 
+COPY http-server .
+#RUN go mod init main.go && go mod tidy && go build -o http-server main.go
+
+EXPOSE 8000
+
+RUN cp http-server /
+
+CMD ["/http-server" ]

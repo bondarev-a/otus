@@ -1,6 +1,7 @@
 package main
 
 import (
+	//"fmt"
 	"fmt"
 	"net/http"
 
@@ -15,5 +16,5 @@ func main() {
 	fmt.Println("Starting...")
 	router := gin.Default()
 	router.GET("/health", func(c *gin.Context) { c.IndentedJSON(http.StatusOK, checkMsg{STATUS: "OK"}) })
-	router.Run("localhost:8000")
+	router.Run(":8000")
 }
