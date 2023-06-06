@@ -16,5 +16,5 @@ func main() {
 	fmt.Println("Starting...")
 	router := gin.Default()
 	router.GET("/health", func(c *gin.Context) { c.IndentedJSON(http.StatusOK, checkMsg{STATUS: "OK"}) })
-	router.Run(":8000")
+	router.Run("0.0.0.0:8000")
 }
