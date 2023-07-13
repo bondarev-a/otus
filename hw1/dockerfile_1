@@ -1,4 +1,5 @@
 FROM golang:alpine
+#FROM golang
 WORKDIR /app
 
 COPY ./service/main.go .

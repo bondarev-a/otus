@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otus-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: otus
+  template:
+    metadata:
+      labels:
+        app: otus
+    spec:
+      containers:
+        - name: otus
+          image: alekseybondarev/otus:latest
+          ports:
+            - containerPort: 8000
