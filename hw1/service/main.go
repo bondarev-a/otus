@@ -32,5 +32,6 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/health", indexHandler)
-	http.ListenAndServe("0.0.0.0:"+port, mux)
+	//http.ListenAndServe("0.0.0.0:"+port, mux)
+	http.ListenAndServe(":"+port, mux)
 }
