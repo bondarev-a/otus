@@ -1,0 +1,24 @@
+helm install profisearch oci://registry-1.docker.io/bitnamicharts/postgresql
+
+export POSTGRES_PASSWORD=$(kubectl get secret --namespace default profisearch-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
+
+/opt/bitnami/scripts/postgresql/entrypoint.sh /bin/bash
+
+kubectl run profisearch-postgresql-client --rm --tty -i --restart='Never' --namespace default --image docker.io/bitnami/postgresql:15.3.0-debian-11-r24 --env="PGPASSWORD=$POSTGRES_PASSWORD" \
+      --command -- psql --host profisearch-postgresql -U postgres -d postgres -p 5432
+
+
+
+
+
+minikube tunnel
+
+
+export PGPASSWORD=$(kubectl get secret --namespace default profisearch-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d) &&
+psql --host 192.168.49.2 -U postgres -d postgres -p 30032
+
+export PGPASSWORD=profi1 && psql --host 192.168.49.2 -U profi -d postgres -p 30032
+
+env="PGPASSWORD=$POSTGRES_PASSWORD"
+
+PGPASSWORD=$(kubectl get secret --namespace default profisearch-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d) && psql --host 192.168.49.2 -U postgres -d postgres -p 30032
