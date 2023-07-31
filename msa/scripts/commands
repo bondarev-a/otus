@@ -22,3 +22,15 @@ export PGPASSWORD=profi1 && psql --host 192.168.49.2 -U profi -d postgres -p 300
 env="PGPASSWORD=$POSTGRES_PASSWORD"
 
 PGPASSWORD=$(kubectl get secret --namespace default profisearch-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d) && psql --host 192.168.49.2 -U postgres -d postgres -p 30032
+
+
+#docker build -t profi_db_logins_dev -f dockerfile_db_dev
+docker build -f dockerfile_db_dev -t profi_db_logins_dev:v1 .
+
+docker run profi_db_logins_dev:v1 -d -p create_db_dev.sql
+
+
+curl -X DELETE http://127.0.0.1:8000/user/2
+curl -d '{"username":"test_post_name", "firstName":"test_post_first_name", "lastName":"test_post_last_name", "email":"test_post__email", "phone":"test_post_phone"}' -H "Content-Type: application/json" -X POST http://localhost:8000/user
+
+docker build -f dockerfile_server_user -t profi_user:v1 .
