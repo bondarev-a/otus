@@ -1,0 +1,15 @@
+FROM golang:alpine
+#FROM golang
+WORKDIR /app
+
+COPY ./cmd/profisearch/main.go .
+ADD go.mod .
+ADD go.sum .
+RUN go mod download
+RUN go mod vendor
+
+RUN go build -o profiuser .
+
+EXPOSE 8000
+RUN cp profiuser /
+ENTRYPOINT ["/profiuser"]

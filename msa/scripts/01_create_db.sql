@@ -1,0 +1,8 @@
+CREATE ROLE IF NOT EXISTS profi LOGIN password 'profi1' SUPERUSER;
+
+CREATE DATABASE IF NOT EXISTS logins
+    WITH
+    OWNER = profi
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;

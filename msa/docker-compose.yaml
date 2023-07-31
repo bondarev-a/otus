@@ -1,0 +1,18 @@
+services:
+  logins:
+    image: 
+      profi_user:v1
+    ports:
+      - 8080:8000
+    environment:
+      db_host: db_logins
+      db_port: 5432
+      db_user: profi
+      db_password: profi1
+      db_name: logins
+  db_logins:
+    image: profi_db_logins_dev:v1
+    #volumes:
+    #  - f22d6a9e4273e4dc3453b5b076827b44ff3b7e9dadcba1b7b0c1e8934d959972:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
