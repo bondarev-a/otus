@@ -34,3 +34,9 @@ curl -X DELETE http://127.0.0.1:8000/user/2
 curl -d '{"username":"test_post_name", "firstName":"test_post_first_name", "lastName":"test_post_last_name", "email":"test_post__email", "phone":"test_post_phone"}' -H "Content-Type: application/json" -X POST http://localhost:8000/user
 
 docker build -f dockerfile_server_user -t profi_user:v1 .
+
+
+docker tag profi_user:v1 alekseybondarev/profi-user:v1
+docker push alekseybondarev/profi-user:v1
+
+docker push alekseybondarev/otus:latest
