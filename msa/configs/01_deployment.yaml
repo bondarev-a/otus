@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profiuser
+  namespace: production-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: profiuser-label
+  template:
+    metadata:
+      labels:
+        app: profiuser-label
+    spec:
+      containers:
+        - name: profiuser
+          image: alekseybondarev/profi-user:latest
+          ports:
+            - name: web
+              containerPort: 8000
