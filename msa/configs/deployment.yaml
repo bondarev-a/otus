@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profiuser
+  #namespace: production-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: profiuser-label
+  template:
+    metadata:
+      labels: 
+        app: profiuser-label
+    spec:
+      containers:
+        - name: profiuser
+          image: alekseybondarev/profi-user:v1
+          ports:
+            - name: web
+              containerPort: 8000
+          env:
+            - name: db_host
+              valueFrom:
+                configMapKeyRef:
+                  name: db-user-config
+                  key: user-db-name
+            - name: db_user
+              valueFrom: 
+                secretKeyRef:
+                  name: db-user-secret
+                  key: db-user-user
+            - name: db_password
+              valueFrom: 
+                secretKeyRef:
+                  name: db-user-secret
+                  key: db-user-password
