@@ -46,4 +46,7 @@ docker build -f dockerfile_server_user -t profi_user:v1 .
 docker tag profi_user:v1 alekseybondarev/profi-user:v1
 docker push alekseybondarev/profi-user:v1
 
+docker tag psql:v1 alekseybondarev/psql:v1
+docker push alekseybondarev/psql:v1
+
 docker push alekseybondarev/otus:latest
