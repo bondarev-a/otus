@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-table-db-user-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: create-table-db-user-job
+        env:
+          - name: PGDATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: db-user-config
+                key: user-db-name
+          - name: PGUSER
+            valueFrom: 
+              secretKeyRef:
+                name: db-user-secret
+                key: db-user-user
+          - name: PGPASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: db-user-secret
+                key: db-user-password
+          - name: PGHOST
+            valueFrom: 
+              configMapKeyRef:
+                name: db-user-config
+                key: db-user-host
+          - name: PGPORT
+            valueFrom: 
+              configMapKeyRef:
+                name: db-user-config
+                key: db-user-port
+        
+        image: alekseybondarev/psql:v1
+        command: ["psql",  "-c"]
+        args:
+          - CREATE TABLE IF NOT EXISTS public.users
+            (
+                id SERIAL PRIMARY KEY,
+                user_name varchar(255),
+                first_name varchar(255),
+                last_name varchar(255),
+                email varchar(255),
+                phone varchar(255)
+            ) TABLESPACE pg_default;
+
+            ALTER TABLE IF EXISTS public.users
+                OWNER to logins;
+
+
+      restartPolicy: Never
+  backoffLimit: 4
+

@@ -32,24 +32,10 @@ spec:
         ports:
         - containerPort: 5432
           name: postgredb
-        command: 
-        
-        env:
-          - name: POSTGRES_DB
-            valueFrom:
-              configMapKeyRef:
-                name: db-user-config
-                key: user-db-name
-          - name: POSTGRES_USER
-            valueFrom: 
-              secretKeyRef:
-                name: db-user-secret
-                key: db-user-user
-          - name: POSTGRES_PASSWORD
-            valueFrom: 
-              secretKeyRef:
-                name: db-user-secret
-                key: db-user-password
+        command: ["psql",  "-U", "postgres", -c"]
+        args:
+          - CREATE ROLE IF NOT EXISTS profi LOGIN password 'profi1' SUPERUSER;
+            CREATE DATABASE IF NOT EXISTS logins WITH OWNER = profi ENCODING = 'UTF8' CONNECTION LIMIT = -1 IS_TEMPLATE = False;
         volumeMounts:
         - name: postgredb
           mountPath: /var/lib/postgresql/data
