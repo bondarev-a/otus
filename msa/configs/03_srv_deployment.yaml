@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: profiuser
-  #namespace: production-ns
 spec:
   replicas: 2
   selector:
@@ -20,18 +19,18 @@ spec:
             - name: web
               containerPort: 8000
           env:
-            - name: db_host
+            - name: PGHOST
               valueFrom:
                 configMapKeyRef:
                   name: db-user-config
-                  key: user-db-name
-            - name: db_user
+                  key: PGHOST
+            - name: PGUSER
               valueFrom: 
                 secretKeyRef:
                   name: db-user-secret
-                  key: db-user-user
-            - name: db_password
+                  key: PGUSER
+            - name: PGPASSWORD
               valueFrom: 
                 secretKeyRef:
                   name: db-user-secret
-                  key: db-user-password
+                  key: PGPASSWORD

@@ -12,27 +12,27 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: db-user-config
-                key: user-db-name
+                key: PGDATABASE
           - name: PGUSER
             valueFrom: 
               secretKeyRef:
                 name: db-user-secret
-                key: db-user-user
+                key: PGUSER
           - name: PGPASSWORD
             valueFrom: 
               secretKeyRef:
                 name: db-user-secret
-                key: db-user-password
+                key: PGPASSWORD
           - name: PGHOST
             valueFrom: 
               configMapKeyRef:
                 name: db-user-config
-                key: db-user-host
+                key: PGHOST
           - name: PGPORT
             valueFrom: 
               configMapKeyRef:
                 name: db-user-config
-                key: db-user-port
+                key: PGPORT
         
         image: alekseybondarev/psql:v1
         command: ["psql",  "-c"]
@@ -47,8 +47,7 @@ spec:
                 phone varchar(255)
             ) TABLESPACE pg_default;
 
-            ALTER TABLE IF EXISTS public.users
-                OWNER to logins;
+            ALTER TABLE IF EXISTS public.users OWNER to profi;
 
 
       restartPolicy: Never

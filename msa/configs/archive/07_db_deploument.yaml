@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db-user-statefulset
+spec:
+  serviceName: "db-user-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresdb
+  template:
+    metadata:
+      labels:
+        app: postgresdb
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:latest
+        ports:
+        - containerPort: 5432
+          name: postgredb
+        #command: ["psql",  "-U", "postgres", -c"]
+        #args:
+        #  - CREATE ROLE IF NOT EXISTS profi LOGIN password 'profi1' SUPERUSER;
+        #    CREATE DATABASE IF NOT EXISTS logins WITH OWNER = profi ENCODING = 'UTF8' CONNECTION LIMIT = -1 IS_TEMPLATE = False;
+        volumeMounts:
+          - mountPath: /var/lib/postgres/data
+            name: db-data
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: postgres-claim
+
+
+
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: postgresdb
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: postgresdb
+#  template:
+#    metadata:
+#      labels:
+#        app: postgresdb
+#    spec:
+#      containers:
+#        - name: postgresdb
+#          image: postgres:latest
+#          ports:
+#            - containerPort: 5432
+          #envFrom:
+            #- secretRef:
+            #  name: db-user-secret
+          #  - configMapRef:
+          #    name: db-user-config
+          #command: ["psql",  "-U", "postgres", -c"]
+          #args:
+          #  - CREATE ROLE IF NOT EXISTS profi LOGIN password 'profi1' SUPERUSER;
+          #    CREATE DATABASE IF NOT EXISTS logins WITH OWNER = profi ENCODING = 'UTF8' CONNECTION LIMIT = -1 IS_TEMPLATE = False;
+#          volumeMounts:
+#            - mountPath: /var/lib/postgres/data
+#              name: db-data
+#      volumes:
+#        - name: db-data
+#          persistentVolumeClaim:
+#            claimName: postgres-claim

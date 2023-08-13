@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: db-user-config
-data:
-  user-db-host: "db-user-service"
-  user-db-port: "5432"
-  user-db-name: "logins"
