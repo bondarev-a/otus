@@ -50,3 +50,6 @@ docker tag psql:v1 alekseybondarev/psql:v1
 docker push alekseybondarev/psql:v1
 
 docker push alekseybondarev/otus:latest
+
+
+kubectl get pod db-user-statefulset-0 -o go-template="{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}"
